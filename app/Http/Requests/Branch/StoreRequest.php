@@ -27,4 +27,12 @@ class StoreRequest extends FormRequest
             'title' => 'required|string'
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Поле title обязательно для заполнения',
+            'section_id.required' => 'Поле section_id обязательно для заполнения',
+        ];
+    }
 }
