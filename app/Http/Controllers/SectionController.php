@@ -53,7 +53,8 @@ class SectionController extends Controller
      */
     public function edit(Section $section)
     {
-        //
+        $section = SectionResource::make($section)->resolve();
+        return inertia('Section/Edit', compact('section'));
     }
 
     /**
@@ -61,7 +62,10 @@ class SectionController extends Controller
      */
     public function update(UpdateRequest $request, Section $section)
     {
-        //
+        $data = $request->validated();
+        $section->update($data);
+
+        return redirect()->route('sections.index');
     }
 
     /**
