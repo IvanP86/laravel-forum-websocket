@@ -54,7 +54,10 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        //
+        $sections = Section::all();
+        $sections = SectionResource::collection($sections)->resolve();
+        $branch = BranchResource::make($branch)->resolve();
+        return inertia('Branch/Edit', compact('sections', 'branch'));
     }
 
     /**
@@ -62,7 +65,9 @@ class BranchController extends Controller
      */
     public function update(UpdateRequest $request, Branch $branch)
     {
-        //
+        $data = $request->validated();
+        $branch->update($data);
+        return redirect()->route('sections.index');
     }
 
     /**
