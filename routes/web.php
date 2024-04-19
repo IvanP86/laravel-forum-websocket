@@ -5,6 +5,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,9 +44,11 @@ Route::middleware('auth')->group(function () {
     Route::get('sections/{section}/branches_except/{branch}', [SectionController::class, 'branchIndexExcept']);
 
     Route::get('branches/{branch}/themes/create', [BranchController::class, 'themeCreate'])->name('branches.themes.create');
+    Route::get('users/personal', [UserController::class, 'personal'])->name('users.personal');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
