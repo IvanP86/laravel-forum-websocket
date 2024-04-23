@@ -14,11 +14,11 @@
                 <p class="mb-2">
                     Сменить аватар
                 </p>
-                <a href="#" class="block w-24 h-24 rounded-full bg-gray-300">
-                    <img v-if="user.avatar" :src="user.avatar" :alt="user.name">
+                <a href="#" @click.prevent="this.$refs.avatar_load.click()" class="block w-24 h-24 rounded-full overflow-hidden bg-gray-300">
+                    <img v-if="user.avatar_url" class="w-24 h-24 block" :src="user.avatar_url" :alt="user.name">
                 </a>
-                <div>
-                    <input type="file">
+                <div hidden>
+                    <input @change="(e) => storeAvatar(e)" ref="avatar_load" type="file">
                 </div>
             </div>            
         </div>
@@ -40,6 +40,21 @@ export default {
         return {
             // content: ''
 
+        }
+    },
+
+    methods: {
+        storeAvatar(e)
+        {
+            let file = e.target.files[0]
+            const formData = new FormData()
+            formData.append('avatar', file)
+            formData.append('_method', 'patch')
+
+            axios.post('/users/personal', formData)
+            .then( res => {
+                this.user.avatar_url = res.data.avatar_url
+            })
         }
     },
 

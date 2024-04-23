@@ -6,8 +6,8 @@
         <div v-if="theme.messages.length > 0">
             <div v-for="message in theme.messages" class="flex bg-white border border-gray-300">
                 <div class="p-4 w-1/6 border-r border-gray-300">
-                    <div class="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-2">
-
+                    <div class="w-24 h-24 overflow-hidden bg-gray-300 rounded-full mx-auto mb-2">
+                        <img v-if="message.user.avatar_url" class="w-24 h-24 rounded-full" :src="message.user.avatar_url" :alt="message.user.name">
                     </div>
                     <div>
                         <h3 class="text-center">{{ message.user.name }}</h3>
@@ -16,7 +16,7 @@
                 <div class="p-4 w-5/6">
                     <div>
                         <p class="text-sm italic"> {{ message.time }} </p>
-                    </div>                    
+                    </div>
                     <div class="mb-2">
                         <p v-html="message.content"></p>
                     </div>
@@ -65,7 +65,7 @@ export default {
             axios.post('/messages', {
                 content: this.$refs.editor.innerHTML,
                 theme_id: this.theme.id
-            }).then( res => {
+            }).then(res => {
                 this.$refs.editor.innerHTML = ''
             })
         }
