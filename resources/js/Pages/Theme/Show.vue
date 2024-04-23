@@ -24,13 +24,17 @@
                         </div>
                         <div class="flex items-center justify-end">
                             <div class="flex items-center">
+                                <div class="mr-4">
+                                    <a @click.prevent="quote(message.content)" href="#"
+                                        class="text-sm rounded-lg bg-sky-600 border border-sky-700 inline-block py-2 px-3 text-center text-white">Цитировать</a>
+                                </div>
                                 <span class="mr-2">
                                     {{ message.likes }}
                                 </span>
                                 <a @click.prevent="toggleLike(message)" href="">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" 
-                                        :class="[message.is_liked ? 'fill-sky-600' : '',  'w-6 h-6 stroke-sky-600']">
+                                        stroke-width="1.5" stroke="currentColor"
+                                        :class="[message.is_liked ? 'fill-sky-600' : '', 'w-6 h-6 stroke-sky-600']">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                                     </svg>
@@ -85,14 +89,24 @@ export default {
                 theme_id: this.theme.id
             }).then(res => {
                 this.$refs.editor.innerHTML = ''
+                this.theme.messages.push(res.data)
             })
         },
         toggleLike(message) {
             axios.post(`/messages/${message.id}/likes`)
-            .then( res => {
-                message.is_liked ? message.likes-- : message.likes++
-                message.is_liked = !message.is_liked
-            })
+                .then(res => {
+                    message.is_liked ? message.likes-- : message.likes++
+                    message.is_liked = !message.is_liked
+                })
+        },
+        quote(content) {
+
+            if (window.getSelection().toString()) {
+                content = window.getSelection().toString()
+            }
+            const editor = this.$refs.editor
+            const oldText = editor.innerHTML
+            editor.innerHTML = `${oldText}<blockquote>${content}</blockquote><br>`
         }
     },
 
@@ -100,4 +114,12 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style>
+blockquote {
+    display: block;
+    padding-left: 6px;
+    padding: 4px;
+    border-left: 4px solid #a0aec0;
+    background-color: #f6f6f6;
+}
+</style>
