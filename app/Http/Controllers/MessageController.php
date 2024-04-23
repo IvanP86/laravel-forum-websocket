@@ -69,4 +69,9 @@ class MessageController extends Controller
     {
         //
     }
+
+    public function toggleLikes(Message $message)
+    {
+        $message->likedUsers()->toggle(auth()->id());
+    }
 }

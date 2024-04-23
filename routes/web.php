@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::get('sections/{section}/branches_except/{branch}', [SectionController::class, 'branchIndexExcept']);
 
     Route::get('branches/{branch}/themes/create', [BranchController::class, 'themeCreate'])->name('branches.themes.create');
+
+    Route::post('messages/{message}/likes', [MessageController::class, 'toggleLikes'])->name('messages.likes.toggle');
+
     Route::get('users/personal', [UserController::class, 'personal'])->name('users.personal');
     Route::patch('users/personal', [UserController::class, 'update'])->name('users.update');
 
