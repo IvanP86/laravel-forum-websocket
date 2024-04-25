@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Message\StoreComplaintRequest;
 use App\Http\Requests\Message\StoreRequest;
 use App\Http\Requests\Message\UpdateRequest;
 use App\Http\Resources\Message\MessageResource;
@@ -82,5 +83,11 @@ class MessageController extends Controller
     public function toggleLikes(Message $message)
     {
         $message->likedUsers()->toggle(auth()->id());
+    }
+
+    public function storeComplaint(StoreComplaintRequest $request, Message $message)
+    {
+        $data = $request->validated();
+        $message->complaintedUsers()->attach(auth()->id(), $data);
     }
 }

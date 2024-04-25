@@ -25,6 +25,10 @@
                         <div class="flex items-center justify-end">
                             <div class="flex items-center">
                                 <div class="mr-4">
+                                    <a @click.prevent="openComplaint(message)" href="#"
+                                        class="text-sm rounded-lg bg-white border border-red-800 inline-block py-2 px-3 text-center text-red-800">Пожаловаться</a>
+                                </div>
+                                <div class="mr-4">
                                     <a @click.prevent="quote(message.content)" href="#"
                                         class="text-sm rounded-lg bg-sky-600 border border-sky-700 inline-block py-2 px-3 text-center text-white">Цитировать</a>
                                 </div>
@@ -44,6 +48,10 @@
                                     </svg>
                                 </a>
                             </div>
+                        </div>
+                        <div class="flex" v-if="message.is_complaint">
+                            <input v-model="message.body" type="text" class="p-2 w-5/6 rounded-r-none rounded-lg border border-gray-300" placeholder="Ваша жалоба">
+                            <a @click.prevent="complaint(message)" class="block w-1/6 rounded-l-none text-center bg-red-800 text-white p-2 rounded-lg" href="#">Отправить</a>
                         </div>
                     </div>
                 </div>
@@ -93,7 +101,6 @@ export default {
                 theme_id: this.theme.id
             }).then(res => {
                 this.$refs.editor.innerHTML = ''
-                // console.log(res.data)
                 this.theme.messages.push(res.data)
             })
         },
@@ -118,6 +125,18 @@ export default {
             const editor = this.$refs.editor
             const oldText = editor.innerHTML
             editor.innerHTML = `${oldText} ${title}<blockquote>${message.content}</blockquote><br>`
+        },
+        openComplaint(message) {
+            message.body = ''
+            message.is_complaint = !message.is_complaint
+        },
+        complaint(message) {
+            axios.post(`/messages/${message.id}/complaints`, {
+                body: message.body,
+                theme_id: message.theme_id
+            }).then( res => {
+               message.body = '' 
+            })
         }
     },
 
