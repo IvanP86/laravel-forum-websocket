@@ -19,6 +19,9 @@
                         <p class="text-sm italic"> {{ message.time }} </p>
                     </div>
                     <div>
+                        <div class="mb-4" v-if="message.is_not_solved_complaint">
+                            <p class="w-full bg-red-100 border border-red-200 p-2">Ваша жалоба в рассмотрении</p>
+                        </div>
                         <div class="mb-4">
                             <p v-html="message.content"></p>
                         </div>
@@ -50,8 +53,12 @@
                             </div>
                         </div>
                         <div class="flex" v-if="message.is_complaint">
-                            <input v-model="message.body" type="text" class="p-2 w-5/6 rounded-r-none rounded-lg border border-gray-300" placeholder="Ваша жалоба">
-                            <a @click.prevent="complaint(message)" class="block w-1/6 rounded-l-none text-center bg-red-800 text-white p-2 rounded-lg" href="#">Отправить</a>
+                            <input v-model="message.body" type="text"
+                                class="p-2 w-5/6 rounded-r-none rounded-lg border border-gray-300"
+                                placeholder="Ваша жалоба">
+                            <a @click.prevent="complaint(message)"
+                                class="block w-1/6 rounded-l-none text-center bg-red-800 text-white p-2 rounded-lg"
+                                href="#">Отправить</a>
                         </div>
                     </div>
                 </div>
@@ -62,6 +69,19 @@
                 <h3 class="text-xl mr-4">Добавить сообщение</h3>
             </div>
             <div class="mb-4">
+                <div class="bg-gray-50 border border-gray-100 p-2 w-full">
+                    <div>
+                        <a @click.prevent="this.$refs.image.click()" href="#" class="block w-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                            </svg>
+                        </a>
+                        <input @change="e => storeImage(e)" hidden ref="image" type="file">
+                    </div>
+
+                </div>
                 <div ref="editor" class="w-full border border-gray-300 p-2" contenteditable="true">
                 </div>
             </div>
@@ -134,9 +154,23 @@ export default {
             axios.post(`/messages/${message.id}/complaints`, {
                 body: message.body,
                 theme_id: message.theme_id
-            }).then( res => {
-               message.body = '' 
+            }).then(res => {
+                message.is_not_solved_complaint = res.data.is_not_solved_complaint
+                message.body = ''
             })
+        },
+        storeImage(e) {
+            const file = e.target.files[0]
+            const formData = new FormData()
+            formData.append('image', file)
+            axios.post('/images', formData)
+                .then(res => {
+                    const image = `<img src="${res.data.url}" />`
+                    const editor = this.$refs.editor
+                    const oldText = editor.innerHTML
+                    editor.innerHTML = `${oldText} ${image} <br>`
+
+                })
         }
     },
 

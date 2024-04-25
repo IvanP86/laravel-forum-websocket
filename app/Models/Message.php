@@ -37,4 +37,12 @@ class Message extends Model
     {
         return $this->likedUsers()->where('user_id', auth()->id())->exists();
     }
+
+    public function getIsNotSolvedComplaintAttribute()
+    {
+        return $this->complaintedUsers()
+        ->where('user_id', auth()->id())
+        ->where('is_solved', false)
+        ->exists();
+    }
 }
