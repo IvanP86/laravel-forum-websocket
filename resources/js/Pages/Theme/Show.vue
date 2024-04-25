@@ -69,8 +69,8 @@
                 <h3 class="text-xl mr-4">Добавить сообщение</h3>
             </div>
             <div class="mb-4">
-                <div class="bg-gray-50 border border-gray-100 p-2 w-full">
-                    <div>
+                <div class="bg-gray-50 border border-gray-100 flex items-center p-2 w-full">
+                    <div class="mr-2">
                         <a @click.prevent="this.$refs.image.click()" href="#" class="block w-6">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
@@ -79,6 +79,9 @@
                             </svg>
                         </a>
                         <input @change="e => storeImage(e)" hidden ref="image" type="file">
+                    </div>
+                    <div>
+                        <a @click.prevent="strong" href="#" class="text-lg"><strong>B</strong></a>
                     </div>
 
                 </div>
@@ -171,6 +174,15 @@ export default {
                     editor.innerHTML = `${oldText} ${image} <br>`
 
                 })
+        },
+        strong() {
+            if (!window.getSelection().toString()) return
+            let selection = window.getSelection()
+            let range = selection.getRangeAt(0)
+            let strong = document.createElement('strong')
+            // strong.className = 'someclass'
+            range.surroundContents(strong)
+            
         }
     },
 
