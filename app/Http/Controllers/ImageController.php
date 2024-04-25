@@ -15,7 +15,8 @@ class ImageController extends Controller
         $data = $request->validated();
         $path = Storage::disk('public')->put('/images', $data['image']);
         $image = Image::create([
-            'path' => $path
+            'path' => $path,
+            'user_id' => auth()->id()
         ]);
 
         return ImageResource::make($image)->resolve();

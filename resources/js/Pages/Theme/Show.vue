@@ -165,7 +165,7 @@ export default {
             formData.append('image', file)
             axios.post('/images', formData)
                 .then(res => {
-                    const image = `<img src="${res.data.url}" />`
+                    const image = `<span hidden>img_id=${res.data.id}</span> <img src="${res.data.url}" />`
                     const editor = this.$refs.editor
                     const oldText = editor.innerHTML
                     editor.innerHTML = `${oldText} ${image} <br>`
