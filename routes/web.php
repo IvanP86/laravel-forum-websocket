@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MessageController;
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('users/personal', [UserController::class, 'personal'])->name('users.personal');
     Route::patch('users/personal', [UserController::class, 'update'])->name('users.update');
     Route::post('/images', [ImageController::class, 'store']);
+
+    Route::get('/admin', [MainController::class, 'index'])->name('admin.name.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
