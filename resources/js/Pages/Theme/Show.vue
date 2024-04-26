@@ -4,7 +4,7 @@
             <h3 class="text-xl mr-4">{{ theme.title }}</h3>
         </div>
         <div v-if="theme.messages.length > 0">
-            <div v-for="message in theme.messages" class="flex bg-white border border-gray-300">
+            <div v-for="message in theme.messages" :id="message.id" class="flex bg-white border border-gray-300">
                 <div class="p-4 w-1/6 border-r border-gray-300">
                     <div class="w-24 h-24 overflow-hidden bg-gray-300 rounded-full mx-auto mb-2">
                         <img v-if="message.user.avatar_url" class="w-24 h-24 rounded-full" :src="message.user.avatar_url"
