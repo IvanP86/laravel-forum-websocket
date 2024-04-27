@@ -3,7 +3,8 @@
         <div class="bg-white border-b border-gray-300 py-4">
             <div class="w-1/2 mx-auto">
                 <Link :href="route('sections.index')" class="mr-4">Forum</Link>
-                <Link :href="route('users.personal')">Личный кабинет</Link>
+                <Link :href="route('users.personal')" class="mr-4">Личный кабинет</Link>
+                <Link :href="route('admin.main.index')">Админка</Link>
             </div>
         </div>
         <div class="w-1/2 flex items-start mx-auto py-4">
@@ -14,6 +15,9 @@
                 </div>
                 <div>
                     <Link class="block p-4 w-full border-b border-gray-300" :href="route('admin.complaints.index')">Жалобы</Link>
+                </div>
+                <div>
+                    <Link class="block p-4 w-full border-b border-gray-300" :href="route('admin.roles.index')">Роли</Link>
                 </div>
             </div>
             <div class="w-3/4 bg-white p-4 border border-gray-300">
