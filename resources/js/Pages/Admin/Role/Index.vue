@@ -7,7 +7,22 @@
         </div>
         <div>
             <div class="border border-gray-200 rounded-lg">
-
+                <table class="text-center w-full text-medium">
+                    <thead class="w-full bg-gray-100">
+                        <tr>
+                            <th class="p-4 text-gray-700">ID</th>
+                            <th class="p-4 text-gray-700">Role</th>
+                            <th class="p-4 text-gray-700">Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="role in roles" class="text-gray-500">
+                            <td class="p-4">{{ role.id }}</td>
+                            <td class="p-4">{{ role.title }}</td>
+                            <td class="p-4">{{ role.code }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -19,6 +34,10 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Link } from '@inertiajs/vue3';
 export default {
     name: "Index",
+
+    props: [
+        'roles'
+    ],
 
     components: {
 
