@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Role;
+namespace App\Http\Resources\User;
 
+use App\Http\Resources\Role\RoleResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoleResource extends JsonResource
+class UserWithrolesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +17,9 @@ class RoleResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'code' => $this->code
+            'name' => $this->name,
+            'avatar_url' => $this->avatar_url,
+            'roles' => RoleResource::collection($this->roles)->resolve()
         ];
     }
 }

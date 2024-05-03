@@ -19,6 +19,9 @@
                 <div>
                     <Link class="block p-4 w-full border-b border-gray-300" :href="route('admin.roles.index')">Роли</Link>
                 </div>
+                <div>
+                    <Link class="block p-4 w-full border-b border-gray-300" :href="route('admin.users.index')">Пользователи</Link>
+                </div>
             </div>
             <div class="w-3/4 bg-white p-4 border border-gray-300">
 
