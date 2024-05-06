@@ -28,6 +28,7 @@ class SectionController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Section::class);
         return inertia('Section/Create');
     }
 
@@ -36,6 +37,7 @@ class SectionController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $this->authorize('create', Section::class);
         $data = $request->validated();
         Section::firstOrCreate($data);
         return redirect()->route('sections.index');
@@ -54,6 +56,7 @@ class SectionController extends Controller
      */
     public function edit(Section $section)
     {
+        $this->authorize('update', Section::class);
         $section = SectionResource::make($section)->resolve();
         return inertia('Section/Edit', compact('section'));
     }
@@ -63,6 +66,7 @@ class SectionController extends Controller
      */
     public function update(UpdateRequest $request, Section $section)
     {
+        $this->authorize('update', Section::class);
         $data = $request->validated();
         $section->update($data);
 
