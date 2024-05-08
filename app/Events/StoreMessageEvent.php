@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Http\Resources\Message\MessageResource;
+use App\Http\Resources\Notification\NotificationResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,16 +12,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TestEvent implements ShouldBroadcast
+class StoreMessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    protected $message;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -30,19 +33,19 @@ class TestEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('test-name'),
+            new Channel('themes.'. $this->message->theme_id),
         ];
     }
 
     public function broadcastAs()
     {
-        return 'test';
+        return 'store_message';
     }
 
     public function broadcastWith()
     {
         return [
-            'message' => "hello"
+            'data' => MessageResource::make($this->message)->resolve()
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StoreMessageEvent;
 use App\Http\Requests\Message\StoreComplaintRequest;
 use App\Http\Requests\Message\StoreRequest;
 use App\Http\Requests\Message\UpdateRequest;
@@ -52,6 +53,8 @@ class MessageController extends Controller
             return User::where('id', $id)->exists();
         });
         $message = Message::create($data);
+
+        broadcast(new StoreMessageEvent($message))->toOthers();
         Image::whereIn('id', $imgIds)->update([
             'message_id' => $message->id
         ]);
