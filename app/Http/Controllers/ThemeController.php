@@ -7,7 +7,6 @@ use App\Http\Requests\Theme\UpdateRequest;
 use App\Http\Resources\Theme\ThemeResource;
 use App\Http\Resources\Theme\ThemeWithMessagesResource;
 use App\Models\Theme;
-use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {

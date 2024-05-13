@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\TestEvent;
 use App\Http\Controllers\Admin\ComplaintController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\RoleController;

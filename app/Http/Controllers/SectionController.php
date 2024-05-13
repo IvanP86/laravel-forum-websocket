@@ -9,7 +9,6 @@ use App\Http\Resources\Section\SectionResource;
 use App\Http\Resources\Section\SectionWithBranchesResource;
 use App\Models\Branch;
 use App\Models\Section;
-use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
@@ -20,6 +19,7 @@ class SectionController extends Controller
     {
         $sections = Section::with('branches')->get();
         $sections = SectionWithBranchesResource::collection($sections)->resolve();
+
         return inertia('Section/Index', compact('sections'));
     }
 
@@ -29,6 +29,7 @@ class SectionController extends Controller
     public function create()
     {
         $this->authorize('create', Section::class);
+
         return inertia('Section/Create');
     }
 
@@ -40,6 +41,7 @@ class SectionController extends Controller
         $this->authorize('create', Section::class);
         $data = $request->validated();
         Section::firstOrCreate($data);
+
         return redirect()->route('sections.index');
     }
 
@@ -58,6 +60,7 @@ class SectionController extends Controller
     {
         $this->authorize('update', Section::class);
         $section = SectionResource::make($section)->resolve();
+
         return inertia('Section/Edit', compact('section'));
     }
 
@@ -79,6 +82,7 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         $section->delete();
+
         return redirect()->back();
     }
 
@@ -90,6 +94,7 @@ class SectionController extends Controller
     public function branchIndexExcept(Section $section, Branch $branch)
     {
         $branches = $section->branches()->where('id', '!=', $branch->id)->get();
+
         return BranchResource::collection($branches)->resolve();
     }
 }
