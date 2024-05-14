@@ -14,12 +14,12 @@ class Section extends Model
 
     protected $guarded = [];
 
-    public function branches():HasMany
+    public function branches(): HasMany
     {
         return $this->hasMany(Branch::class, 'section_id', 'id');
     }
 
-    public function parentBranches():HasMany
+    public function parentBranches(): HasMany
     {
         return $this->hasMany(Branch::class, 'section_id', 'id')->whereNull('parent_id');
     }

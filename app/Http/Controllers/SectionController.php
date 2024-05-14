@@ -17,7 +17,7 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::with('branches')->get();
+        $sections = Section::with('parentBranches')->get();
         $sections = SectionWithBranchesResource::collection($sections)->resolve();
 
         return inertia('Section/Index', compact('sections'));

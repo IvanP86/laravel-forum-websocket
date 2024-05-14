@@ -90,6 +90,7 @@ class MessageController extends Controller
         $data = $request->validated();
         $message->complaintedUsers()->attach(auth()->id(), $data);
         NotificationService::store($message, null, 'На Вас поступила жалоба');
+        $message->is_not_solved_complaint = true;
 
         return MessageResource::make($message)->resolve();
     }

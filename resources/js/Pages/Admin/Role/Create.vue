@@ -23,7 +23,7 @@
                         </select>
                     </div>
                     <div class="mb-4">
-                        <input type="text" placeholder="Заголовок" v-model="title" class="border-gray-300 p-2 w-2/4">
+                        <input type="text" placeholder="editor" readonly v-model="title" class="border-gray-300 p-2 w-2/4">
                         <div class="text-sm text-red-600" v-if="this.$page.props.errors.title">
                             {{ this.$page.props.errors.title }}
                         </div>
@@ -47,7 +47,7 @@ export default {
 
     data() {
         return {
-            title: '',
+            title: 'editor',
             section_id: null,
             branch_id: null,
             branches: []
@@ -61,11 +61,11 @@ export default {
 
     methods: {
         store() {
-          this.$inertia.post('/admin/roles', {
-            title: this.title,
-            section_id: this.section_id,
-            branch_id: this.branch_id
-          })
+            this.$inertia.post('/admin/roles', {
+                title: this.title,
+                section_id: this.section_id,
+                branch_id: this.branch_id
+            })
         },
 
         getBranches() {

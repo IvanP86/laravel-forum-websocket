@@ -69,4 +69,13 @@ class User extends Authenticatable
             return User::where('id', $id)->exists();
         });
     }
+
+    public function likedMessages(): BelongsToMany
+    {
+        return $this->belongsToMany(Message::class, 'message_user_likes', 'user_id', 'message_id');
+    }
+    public function complaintedMessages(): BelongsToMany
+    {
+        return $this->belongsToMany(Message::class, 'complaints', 'user_id', 'message_id');
+    }
 }
